@@ -1,0 +1,39 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        List<Integer> x =Arrays.stream(preorder).boxed().collect(Collectors.toList());
+        List<Integer> y =Arrays.stream(inorder).boxed().collect(Collectors.toList());
+        TreeNode root=recur(x,y);
+        return root;
+
+    } 
+    
+    public TreeNode recur(List<Integer> preorder, List<Integer> inorder){
+        TreeNode root;
+        if (preorder.isEmpty() || inorder.isEmpty())
+            return null;
+        if (inorder.contains(preorder.get(0)))
+            root = new TreeNode(preorder.get(0));
+        else return null;
+        preorder.remove(0);
+        int position= inorder.indexOf(root.val);
+        root.left = recur(preorder,inorder.subList(0,position));
+        root.right = recur(preorder,inorder.subList(position+1,inorder.size()));
+        return root;
+    }
+}
