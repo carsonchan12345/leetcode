@@ -1,3 +1,3 @@
 # leetcode
  
-leetcode train
+leetcode grinding
